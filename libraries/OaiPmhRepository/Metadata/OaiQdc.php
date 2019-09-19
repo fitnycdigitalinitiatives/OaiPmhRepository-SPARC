@@ -125,6 +125,10 @@ class OaiPmhRepository_Metadata_OaiQdc implements OaiPmhRepository_Metadata_Form
             // Append the browse URI to all results
             if ($propertyName == 'dc:identifier') {
                 $oai_qdc->appendNewElement('dc:identifier', record_url($item, 'show', true));
+                if (($record_name = metadata($item, array('Item Type Metadata', 'Record Name'))) && ($record_id = metadata($item, array('Item Type Metadata', 'Record ID')))) {
+              		$thumb_url = 'https://fitdil.fitnyc.edu/media/thumb/' . $record_id . '/' . $record_name . '/';
+              		$oai_qdc->appendNewElement('dc:identifier', $thumb_url);
+              	}
 
                 // Also append an identifier for each file
                 if(get_option('oaipmh_repository_expose_files')) {
